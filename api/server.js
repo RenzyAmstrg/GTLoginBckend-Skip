@@ -5,11 +5,11 @@ const app = express();
 app.set('json spaces', 0);
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, '../')));
 
 // Serve the main page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 // Route untuk login (GET)
@@ -34,6 +34,12 @@ app.get('/player/growid/login/validate', (req, res) => {
       accountType: 'growtopia'
     });
   }
+});
+
+// Start the server locally
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 module.exports = app;
