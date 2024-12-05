@@ -12,6 +12,27 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
+// Route untuk login (POST)
+app.post('/player/growid/login/validate', (req, res) => {
+  const { growId, password } = req.body;
+
+  if (growId && password) {
+    // Simulate account validation
+    res.json({
+      status: 'success',
+      message: 'Account Validated.',
+      token: `\n${growId}|\n${password}|\nklv|\nnull`,
+      url: '',
+      accountType: 'growtopia'
+    });
+  } else {
+    res.status(400).json({
+      status: 'error',
+      message: 'GrowID and Password are required.'
+    });
+  }
+});
+
 // Route untuk login (GET)
 app.get('/player/growid/login/validate', (req, res) => {
   const data = req.query.data;
@@ -34,12 +55,6 @@ app.get('/player/growid/login/validate', (req, res) => {
       accountType: 'growtopia'
     });
   }
-});
-
-// Start the server locally
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 module.exports = app;
