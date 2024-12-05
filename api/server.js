@@ -7,6 +7,11 @@ app.set('json spaces', 0);
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
+// Serve the main page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Route untuk login (GET)
 app.get('/player/growid/login/validate', (req, res) => {
   const data = req.query.data;
@@ -16,7 +21,7 @@ app.get('/player/growid/login/validate', (req, res) => {
     res.json({
       status: 'success',
       message: 'Account Validated.',
-      token: decodedData,
+      token: decodedData.replace(/\\n/g, '\n'),
       url: '',
       accountType: 'growtopia'
     });
